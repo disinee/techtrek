@@ -39,7 +39,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Typography',
-    to: '/theme/typography',
+    to: '/signin',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
