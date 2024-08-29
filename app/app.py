@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, session
 import json
 import os
-from models import User, Project
+from models import User, Project, Leaderboard
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'  # Change this to a more secure key
@@ -9,6 +9,7 @@ app.secret_key = 'supersecretkey'  # Change this to a more secure key
 # Path to the JSON file
 USERS_FILE = 'users.json'
 PROJECTS_FILE = 'projects.json'
+LEADERBOARD_FILE = 'leaderboard.json'
 
 # Load users from JSON file
 def load_users():
@@ -38,17 +39,61 @@ def save_projects(projects):
         projects_data = {proj_id: proj.to_dict() for proj_id, proj in projects.items()}
         json.dump(projects_data, file, indent=4)
 
+def load_leaderboard():
+    if os.path.exists(LEADERBOARD_FILE):
+        with open(LEADERBOARD_FILE, 'r') as file:
+            data = json.load(file)
+            leaderboard = Leaderboard()
+            leaderboard.leaderboard = [(entry['username'], entry['score']) for entry in data['leaderboard']]
+            leaderboard.min_leaderboard_score = data['min_leaderboard_score']
+            return leaderboard
+    return Leaderboard()
+
+def save_leaderboard(leaderboard):
+    data = {
+        'leaderboard': [{'username': user, 'score': score} for user, score in leaderboard.get_leaderboard()],
+        'min_leaderboard_score': leaderboard.min_leaderboard_score
+    }
+    with open(LEADERBOARD_FILE, 'w') as file:
+        json.dump(data, file, indent=4)
+
 # Calculate user score based on progress and project questions
+# def calculate_user_score(user, projects):
+#     total_score = 0
+
+#     # Iterate over the user's progress
+#     for project_id, question_id, _ in user.progress:
+#         if project_id in projects:
+#             project = projects[project_id]
+#             total_score += project.get_question_points(question_id)
+    
+#     return total_score
+
 def calculate_user_score(user, projects):
     total_score = 0
 
-    # Iterate over the user's progress
+    print(f"User Progress: {user.progress}")
+    print(f"Projects: {projects}")
+
     for project_id, question_id, _ in user.progress:
-        if project_id in projects:
-            project = projects[project_id]
-            total_score += project.get_question_points(question_id)
-    
+        # Convert project_id to string if needed
+        project_id_str = str(project_id)
+
+        if project_id_str in projects:
+            project = projects[project_id_str]
+            print(f"Accessing Project: {project_id_str}")
+            print(f"Project Details: {project.to_dict()}")
+            
+            points = project.get_question_points(question_id)
+            print(f"Question ID: {question_id} | Points: {points}")
+
+            total_score += points
+        else:
+            print(f"Project ID {project_id_str} not found in projects.")
+
+    print(f"Total Score: {total_score}")
     return total_score
+
 
 # Register endpoint
 @app.route('/register', methods=['POST'])
@@ -211,6 +256,30 @@ def calculate_score():
     score = calculate_user_score(user, projects)
     
     return jsonify({'score': score}), 200
+
+@app.route('/update_leaderboard', methods=['POST'])
+def update_leaderboard():
+    users = load_users()
+    projects = load_projects()
+
+    leaderboard = load_leaderboard()
+
+    # Calculate score for each user and update the leaderboard
+    for username, user_data in users.items():
+        user = User.from_dict(user_data)
+        score = calculate_user_score(user, projects)
+        leaderboard.update_leaderboard(username, score)
+
+    save_leaderboard(leaderboard)
+    return jsonify({'message': 'Leaderboard updated successfully'}), 200
+
+@app.route('/leaderboard', methods=['GET'])
+def get_leaderboard():
+    leaderboard = load_leaderboard()
+    if not leaderboard.get_leaderboard():
+        # If leaderboard doesn't exist or is empty, create it from user data
+        update_leaderboard()
+    return jsonify({'leaderboard': leaderboard.get_leaderboard()}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
