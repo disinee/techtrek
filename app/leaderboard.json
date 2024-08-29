@@ -1,23 +1,23 @@
 {
     "leaderboard": [
         {
-            "username": "testname",
-            "score": 0
-        },
-        {
-            "username": "friend",
-            "score": 0
-        },
-        {
             "username": "john_doe",
-            "score": 0
+            "score": 25
         },
         {
             "username": "john",
-            "score": 0
+            "score": 25
         },
         {
             "username": "person1",
+            "score": 25
+        },
+        {
+            "username": "person2",
+            "score": 25
+        },
+        {
+            "username": "testname",
             "score": 0
         }
     ],

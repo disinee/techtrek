@@ -58,11 +58,11 @@ class Project:
         project = Project(data['project_id'], data['project_name'])
         project.questions = {int(qid): int(points) for qid, points in data.get('questions', {}).items()}  # Convert to integers
         return project
-
-    
+ 
 class Leaderboard:
     def __init__(self):
-        self.leaderboard = []
+        self.leaderboard = []  # List of dictionaries
+        self.min_leaderboard_score = 0  # Initialize min_leaderboard_score
 
     def update_leaderboard(self, username, score):
         # Check if the user is already in the leaderboard
@@ -79,6 +79,10 @@ class Leaderboard:
 
         # Keep only the top 5 users
         self.leaderboard = self.leaderboard[:5]
+
+        # Update min_leaderboard_score
+        if self.leaderboard:
+            self.min_leaderboard_score = self.leaderboard[-1]['score']
 
     def get_leaderboard(self):
         return self.leaderboard

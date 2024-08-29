@@ -44,30 +44,18 @@ def load_leaderboard():
         with open(LEADERBOARD_FILE, 'r') as file:
             data = json.load(file)
             leaderboard = Leaderboard()
-            leaderboard.leaderboard = [(entry['username'], entry['score']) for entry in data['leaderboard']]
-            leaderboard.min_leaderboard_score = data['min_leaderboard_score']
+            leaderboard.leaderboard = data.get('leaderboard', [])
+            leaderboard.min_leaderboard_score = data.get('min_leaderboard_score', 0)
             return leaderboard
     return Leaderboard()
 
 def save_leaderboard(leaderboard):
     data = {
-        'leaderboard': [{'username': user, 'score': score} for user, score in leaderboard.get_leaderboard()],
+        'leaderboard': leaderboard.get_leaderboard(),
         'min_leaderboard_score': leaderboard.min_leaderboard_score
     }
     with open(LEADERBOARD_FILE, 'w') as file:
         json.dump(data, file, indent=4)
-
-# Calculate user score based on progress and project questions
-# def calculate_user_score(user, projects):
-#     total_score = 0
-
-#     # Iterate over the user's progress
-#     for project_id, question_id, _ in user.progress:
-#         if project_id in projects:
-#             project = projects[project_id]
-#             total_score += project.get_question_points(question_id)
-    
-#     return total_score
 
 def calculate_user_score(user, projects):
     total_score = 0
@@ -265,20 +253,21 @@ def update_leaderboard():
     leaderboard = load_leaderboard()
 
     # Calculate score for each user and update the leaderboard
-    for username, user_data in users.items():
-        user = User.from_dict(user_data)
+    for username, user in users.items():  # user is already a User object
         score = calculate_user_score(user, projects)
+        print(f"Updating leaderboard for {username} with score {score}")
         leaderboard.update_leaderboard(username, score)
 
     save_leaderboard(leaderboard)
     return jsonify({'message': 'Leaderboard updated successfully'}), 200
 
+
 @app.route('/leaderboard', methods=['GET'])
 def get_leaderboard():
     leaderboard = load_leaderboard()
     if not leaderboard.get_leaderboard():
-        # If leaderboard doesn't exist or is empty, create it from user data
-        update_leaderboard()
+        # If leaderboard doesn't exist or is empty, update it
+        return update_leaderboard()  # This will return a JSON response from update_leaderboard
     return jsonify({'leaderboard': leaderboard.get_leaderboard()}), 200
 
 if __name__ == '__main__':
