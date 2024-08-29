@@ -64,7 +64,6 @@ const Dashboard = () => {
   ]
 
   const progressGroupExample1 = [
-    { title: 'Monday', value1: 34, value2: 78 },
     { title: 'Tuesday', value1: 56, value2: 94 },
     { title: 'Wednesday', value1: 12, value2: 67 },
     { title: 'Thursday', value1: 43, value2: 91 },
@@ -87,6 +86,7 @@ const Dashboard = () => {
 
   const tableExample = [
     {
+      rank: 1,
       avatar: { src: avatar1, status: 'success' },
       user: {
         name: 'Yiorgos Avraamu',
@@ -94,15 +94,12 @@ const Dashboard = () => {
         registered: 'Jan 1, 2023',
       },
       country: { name: 'USA', flag: cifUs },
-      usage: {
-        value: 50,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'success',
-      },
+      usage: '98 pts',
       payment: { name: 'Mastercard', icon: cibCcMastercard },
       activity: '10 sec ago',
     },
     {
+      rank: 2,
       avatar: { src: avatar2, status: 'danger' },
       user: {
         name: 'Avram Tarasios',
@@ -110,39 +107,30 @@ const Dashboard = () => {
         registered: 'Jan 1, 2023',
       },
       country: { name: 'Brazil', flag: cifBr },
-      usage: {
-        value: 22,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'info',
-      },
+      usage: '74 pts',
       payment: { name: 'Visa', icon: cibCcVisa },
       activity: '5 minutes ago',
     },
     {
+      rank: 3,
       avatar: { src: avatar3, status: 'warning' },
       user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2023' },
       country: { name: 'India', flag: cifIn },
-      usage: {
-        value: 74,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'warning',
-      },
+      usage: '50 pts',
       payment: { name: 'Stripe', icon: cibCcStripe },
       activity: '1 hour ago',
     },
     {
+      rank: 4,
       avatar: { src: avatar4, status: 'secondary' },
       user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2023' },
       country: { name: 'France', flag: cifFr },
-      usage: {
-        value: 98,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'danger',
-      },
+      usage: '43 pts',
       payment: { name: 'PayPal', icon: cibCcPaypal },
       activity: 'Last month',
     },
     {
+      rank: 5,
       avatar: { src: avatar5, status: 'success' },
       user: {
         name: 'Agapetus Tadeáš',
@@ -150,15 +138,12 @@ const Dashboard = () => {
         registered: 'Jan 1, 2023',
       },
       country: { name: 'Spain', flag: cifEs },
-      usage: {
-        value: 22,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'primary',
-      },
+      usage: '22 pts',
       payment: { name: 'Google Wallet', icon: cibCcApplePay },
       activity: 'Last week',
     },
     {
+      rank: 6,
       avatar: { src: avatar6, status: 'danger' },
       user: {
         name: 'Friderik Dávid',
@@ -166,21 +151,18 @@ const Dashboard = () => {
         registered: 'Jan 1, 2023',
       },
       country: { name: 'Poland', flag: cifPl },
-      usage: {
-        value: 43,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'success',
-      },
+      usage: '22 pts',
       payment: { name: 'Amex', icon: cibCcAmex },
       activity: 'Last week',
     },
+    
   ]
 
   return (
     <>
-      <WidgetsDropdown className="mb-4" />
+      {/* <WidgetsDropdown className="mb-4" /> */}
       <CCard className="mb-4">
-        <CCardBody>
+        {/* <CCardBody>
           <CRow>
             <CCol sm={5}>
               <h4 id="traffic" className="card-title mb-0">
@@ -207,8 +189,8 @@ const Dashboard = () => {
             </CCol>
           </CRow>
           <MainChart />
-        </CCardBody>
-        <CCardFooter>
+        </CCardBody> */}
+        {/* <CCardFooter>
           <CRow
             xs={{ cols: 1, gutter: 4 }}
             sm={{ cols: 2 }}
@@ -231,15 +213,15 @@ const Dashboard = () => {
               </CCol>
             ))}
           </CRow>
-        </CCardFooter>
+        </CCardFooter> */}
       </CCard>
-      <WidgetsBrand className="mb-4" withCharts />
+      {/* <WidgetsBrand className="mb-4" withCharts /> */}
       <CRow>
         <CCol xs>
           <CCard className="mb-4">
-            <CCardHeader>Traffic {' & '} Sales</CCardHeader>
+            <CCardHeader>Leaderboard</CCardHeader>
             <CCardBody>
-              <CRow>
+              {/* <CRow>
                 <CCol xs={12} md={6} xl={6}>
                   <CRow>
                     <CCol xs={6}>
@@ -319,13 +301,14 @@ const Dashboard = () => {
                     </div>
                   ))}
                 </CCol>
-              </CRow>
+              </CRow> */}
 
               <br />
 
               <CTable align="middle" className="mb-0 border" hover responsive>
                 <CTableHead className="text-nowrap">
                   <CTableRow>
+                  <CTableHeaderCell className="bg-body-tertiary">Rank</CTableHeaderCell>
                     <CTableHeaderCell className="bg-body-tertiary text-center">
                       <CIcon icon={cilPeople} />
                     </CTableHeaderCell>
@@ -333,16 +316,19 @@ const Dashboard = () => {
                     <CTableHeaderCell className="bg-body-tertiary text-center">
                       Country
                     </CTableHeaderCell>
-                    <CTableHeaderCell className="bg-body-tertiary">Usage</CTableHeaderCell>
-                    <CTableHeaderCell className="bg-body-tertiary text-center">
+                    <CTableHeaderCell className="bg-body-tertiary">Points</CTableHeaderCell>
+                    {/* <CTableHeaderCell className="bg-body-tertiary text-center">
                       Payment Method
-                    </CTableHeaderCell>
+                    </CTableHeaderCell> */}
                     <CTableHeaderCell className="bg-body-tertiary">Activity</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
                   {tableExample.map((item, index) => (
                     <CTableRow v-for="item in tableItems" key={index}>
+                      <CTableDataCell className="text-center">
+                      <div className="fw-semibold text-nowrap">{item.rank}</div>
+                      </CTableDataCell>
                       <CTableDataCell className="text-center">
                         <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
                       </CTableDataCell>
@@ -358,16 +344,17 @@ const Dashboard = () => {
                       </CTableDataCell>
                       <CTableDataCell>
                         <div className="d-flex justify-content-between text-nowrap">
-                          <div className="fw-semibold">{item.usage.value}%</div>
+                          {/* <div className="fw-semibold">{item.usage.value}%</div> */}
                           <div className="ms-3">
                             <small className="text-body-secondary">{item.usage.period}</small>
                           </div>
                         </div>
-                        <CProgress thin color={item.usage.color} value={item.usage.value} />
+                        {/* <CProgress thin color={item.usage.color} value={item.usage.value} /> */}
+                        <div className="fw-semibold text-nowrap">{item.usage}</div>
                       </CTableDataCell>
-                      <CTableDataCell className="text-center">
+                      {/* <CTableDataCell className="text-center">
                         <CIcon size="xl" icon={item.payment.icon} />
-                      </CTableDataCell>
+                      </CTableDataCell> */}
                       <CTableDataCell>
                         <div className="small text-body-secondary text-nowrap">Last login</div>
                         <div className="fw-semibold text-nowrap">{item.activity}</div>
