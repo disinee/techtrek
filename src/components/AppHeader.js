@@ -57,11 +57,13 @@ const AppHeader = () => {
               Dashboard
             </CNavLink>
           </CNavItem>
+          <CHeaderNav className="d-none d-md-flex"></CHeaderNav>
           <CNavItem>
-            <CNavLink href="#">Users</CNavLink>
+            <CNavLink to="/Leaderboard" as={NavLink}>Leaderboard</CNavLink>
           </CNavItem>
+          <CHeaderNav className="d-none d-md-flex"></CHeaderNav>
           <CNavItem>
-            <CNavLink href="#">Settings</CNavLink>
+            <CNavLink to="/settings" as={NavLink}>Settings</CNavLink>
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav className="ms-auto">
