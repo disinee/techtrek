@@ -20,11 +20,12 @@ const Register = () => {
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={9} lg={7} xl={6}>
+            
             <CCard className="mx-4">
               <CCardBody className="p-4">
                 <CForm>
-                  <h1>Register</h1>
-                  <p className="text-body-secondary">Create your account</p>
+                  <h1 className="text-center mb-4">Register</h1>
+                  <p className="text-center text-muted mb-4">Create your account</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <CIcon icon={cilUser} />
@@ -56,7 +57,7 @@ const Register = () => {
                     />
                   </CInputGroup>
                   <div className="d-grid">
-                    <CButton color="success">Create Account</CButton>
+                    <CButton color="primary">Create Account</CButton>
                   </div>
                 </CForm>
               </CCardBody>
