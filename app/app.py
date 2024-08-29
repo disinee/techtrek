@@ -2,9 +2,13 @@ from flask import Flask, request, jsonify, session
 import json
 import os
 from models import User, Project
+import hashlib
+import secrets
+
+secret_key = secrets.token_hex(32)
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # Change this to a more secure key
+app.secret_key = secret_key  # Change this to a more secure key
 
 # Path to the JSON file
 USERS_FILE = 'users.json'
@@ -55,7 +59,7 @@ def calculate_user_score(user, projects):
 def register():
     data = request.json
     username = data.get('username')
-    password = data.get('password')
+    password = hashlib.sha256(data.get('password').encode()).hexdigest()
 
     if not username or not password:
         return jsonify({'error': 'Username and password are required'}), 400
@@ -75,7 +79,7 @@ def register():
 def login():
     data = request.json
     username = data.get('username')
-    password = data.get('password')
+    password = hashlib.sha256(data.get('password').encode()).hexdigest()
 
     if not username or not password:
         return jsonify({'error': 'Username and password are required'}), 400

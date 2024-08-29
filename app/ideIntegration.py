@@ -21,7 +21,8 @@ def submit_code():
         )
 
         if result.returncode == 1:
-            result.returncode = re.compile( )
+            # result.returncode =
+            print(re.search(r", (.*)",result.stderr, re.DOTALL).group(1))
         return jsonify({
             'stdout': result.stdout,
             'stderr': result.stderr,
