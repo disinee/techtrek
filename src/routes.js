@@ -25,7 +25,8 @@ const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'))
 const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'))
 const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'))
 const Dropdowns = React.lazy(() => import('./views/buttons/dropdowns/Dropdowns'))
-
+const Level1Project1 = React.lazy(() => import('./views/level1/calculator'))
+const Level2Project1 = React.lazy(() => import('./views/level2/guessnum'))
 //Forms
 const ChecksRadios = React.lazy(() => import('./views/forms/checks-radios/ChecksRadios'))
 const FloatingLabels = React.lazy(() => import('./views/forms/floating-labels/FloatingLabels'))
@@ -77,6 +78,8 @@ const routes = [
   { path: '/buttons/buttons', name: 'Buttons', element: Buttons },
   { path: '/buttons/dropdowns', name: 'Dropdowns', element: Dropdowns },
   { path: '/buttons/button-groups', name: 'Button Groups', element: ButtonGroups },
+  { path: '/level1', name: 'Level 1 Project 1', element: Level1Project1 },
+  { path: '/level2', name: 'Level 2 Project 1', element: Level2Project1 },
   { path: '/charts', name: 'Charts', element: Charts },
   { path: '/forms', name: 'Forms', element: FormControl, exact: true },
   { path: '/forms/form-control', name: 'Form Control', element: FormControl },

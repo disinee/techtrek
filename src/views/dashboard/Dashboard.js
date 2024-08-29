@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   CAvatar,
   CButton,
@@ -55,8 +55,15 @@ import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import MainChart from './MainChart'
 
 const Dashboard = () => {
+  const navigate = useNavigate()
+  const handleLevel1 = () => {
+    navigate('/level1')
+  }
+  const handleLevel2 = () => {
+    navigate('/level2')
+  }
   return (
-    
+        
       <CRow className="text-center">
         <CRow className="text-center my-2">
           <CCol>
@@ -67,20 +74,19 @@ const Dashboard = () => {
         {/* Horizontal Divider */}
         <hr />
         <CCol xs={4}>
-          <Link to="/level1" style={{ textDecoration: 'none' }}>
-            <CButton color="primary" size="lg" style={{ width: '100%', height: '100px' }}>
+            <CButton color="primary" size="lg" style={{ width: '100%', height: '100px' }} onClick={handleLevel1}>
               Build your Own Calculator
             </CButton>
-          </Link>
+
         </CCol>
         <CCol xs={4}>
           <CButton color="primary" size="lg" style={{ width: '100%', height: '100px' }}>
-          
+          Build A Travel Currency Convertor
           </CButton>
         </CCol>
         <CCol xs={4}>
           <CButton color="primary" size="lg" style={{ width: '100%', height: '100px' }}>
-            
+          Gift a Toggle Light  
           </CButton>
         </CCol>
         <CRow className="text-center my-2">
@@ -92,20 +98,18 @@ const Dashboard = () => {
         {/* Horizontal Divider */}
         <hr />
         <CCol xs={4}>
-          <Link to="/calculator" style={{ textDecoration: 'none' }}>
-            <CButton color="secondary" size="lg" style={{ width: '100%', height: '100px' }}>
-              Guess the Number
-            </CButton>
-          </Link>
-        </CCol>
-        <CCol xs={4}>
-          <CButton color="secondary" size="lg" style={{ width: '100%', height: '100px' }}>
-           
+          <CButton color="secondary" size="lg" style={{ width: '100%', height: '100px' }}onClick={handleLevel2}>
+            Guess the Number
           </CButton>
         </CCol>
         <CCol xs={4}>
           <CButton color="secondary" size="lg" style={{ width: '100%', height: '100px' }}>
-            
+            Random Rock-Paper-Scissors
+          </CButton>
+        </CCol>
+        <CCol xs={4}>
+          <CButton color="secondary" size="lg" style={{ width: '100%', height: '100px' }}>
+            Character Counter
           </CButton>
         </CCol>
         <CRow className="text-center my-2">
@@ -119,18 +123,18 @@ const Dashboard = () => {
         <CCol xs={4}>
           <Link to="/calculator" style={{ textDecoration: 'none' }}>
             <CButton color="dark" size="lg" style={{ width: '100%', height: '100px' }}>
-              Decrypt the Secret Message
+              Morse Code Translator
             </CButton>
           </Link>
         </CCol>
         <CCol xs={4}>
           <CButton color="dark" size="lg" style={{ width: '100%', height: '100px' }}>
-            
+            Sudoku Solver
           </CButton>
         </CCol>
         <CCol xs={4}>
           <CButton color="dark" size="lg" style={{ width: '100%', height: '100px' }}>
-            
+            Tic-Tac-Toe
           </CButton>
         </CCol>
       </CRow>
